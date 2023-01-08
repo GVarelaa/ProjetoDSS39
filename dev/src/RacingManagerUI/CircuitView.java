@@ -1,5 +1,7 @@
 package RacingManagerUI;
 
+import RacingManagerLN.Circuits.Sector;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,7 +29,7 @@ public class CircuitView {
         }
 
         System.out.println("\nCircuito adicionado à lista de circuitos disponíveis!");
-        setGDUs(circuitName);
+        setGDUs(circuitName,numCurves+numChicanes,numCurves,numChicanes);
         System.out.println("\nCircuito registado com sucesso!");
     }
 
@@ -61,24 +63,41 @@ public class CircuitView {
     }
 
     private int setGDU() {
-        System.out.print("Indique o grau de dificuldade de ultrapassagem deste setor: ");
+        System.out.print("\nIndique o grau de dificuldade de ultrapassagem deste setor: ");
         int gdu = sc.nextInt();
         sc.nextLine();
         return gdu;
     }
 
-    private void setGDUs(String circuitName) {
-        List<String> sectors = this.controller.showCircuitSectors(circuitName);
-        int i=0;
+    private void setGDUs(String circuitName, int numStraights, int numCurves, int numChicanes) {
+        this.controller.showCircuitSectors(circuitName);
 
-        for (String sector : sectors) {
+        for (int j=0; j<numStraights; j++) {
             System.out.print("--------------");
-            System.out.print(sector);
+            System.out.print("Straight");
             System.out.print("--------------");
             int gdu = setGDU();
 
-            this.controller.addSector(circuitName, gdu, i);
-            i++;
+            this.controller.addSector(circuitName, gdu, 1);
         }
+
+        for (int j=0; j<numChicanes; j++) {
+            System.out.print("--------------");
+            System.out.print("Chicane");
+            System.out.print("--------------");
+            int gdu = setGDU();
+
+            this.controller.addSector(circuitName, gdu, 2);
+        }
+
+        for (int j=0; j<numCurves; j++) {
+            System.out.print("--------------");
+            System.out.print("Curve");
+            System.out.print("--------------");
+            int gdu = setGDU();
+
+            this.controller.addSector(circuitName, gdu, 0);
+        }
+
     }
 }

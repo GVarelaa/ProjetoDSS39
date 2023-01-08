@@ -129,25 +129,7 @@ public class CircuitDAO implements Map<String, Circuit> {
 			st1.setString(1, value.getName());
 			st1.setFloat(2, value.getLength());
 			st1.setInt(3, value.getNumLaps());
-
-			List<Sector> sectors = value.getSectors();
-			for (int i=0; i<sectors.size(); i++) {
-				int sectorType = 0;
-				if (sectors.get(i) instanceof Curve) sectorType = 1;
-				else if (sectors.get(i) instanceof Straight) sectorType = 2;
-				else if (sectors.get(i) instanceof Chicane) sectorType = 3;
-
-				int gdu = 0;
-				if (sectors.get(i).getGdu() == GDU.POSSIBLE) gdu = 1;
-				else if (sectors.get(i).getGdu() == GDU.HARD) gdu = 2;
-				else if (sectors.get(i).getGdu() == GDU.IMPOSSIBLE) gdu = 3;
-
-				st2.setInt(1, sectorType);
-				st2.setInt(2, gdu);
-				st2.setString(3, value.getName());
-				st2.setInt(4, i);
-				st2.executeUpdate();
-			}
+			st1.executeUpdate();
 
 		} catch (SQLException e) {
 			// Error establishing connection
@@ -156,6 +138,29 @@ public class CircuitDAO implements Map<String, Circuit> {
 
 
 		return circuit;
+	}
+
+	public void putSector (String circuitName,int sectorType, int gdu) {
+		try (Connection c = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+			 PreparedStatement st2 = c.prepareStatement("INSERT INTO Sector (sectorType, gdu, circuitName, numSector) VALUES (?,?,?,?);");
+			 PreparedStatement st1 = c.prepareStatement("SELECT COUNT(*) FROM Sector WHERE circuitName=?;")) {
+
+			st1.setString(1,circuitName);
+			ResultSet rs1 = st1.executeQuery();
+			rs1.next();
+			int numSector = rs1.getInt(1);
+
+			st2.setInt(1,sectorType);
+			st2.setInt(2,gdu);
+			st2.setString(3,circuitName);
+			st2.setInt(4,numSector);
+			st2.executeUpdate();
+
+		} catch (SQLException e) {
+			// Error establishing connection
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	@Override

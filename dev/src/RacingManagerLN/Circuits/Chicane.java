@@ -7,7 +7,7 @@ public class Chicane extends Sector {
 
 	@Override
 	public String toString() {
-		return "Chicane GDU = " + this.getGdu();
+		return "Chicane";
 	}
 
 }

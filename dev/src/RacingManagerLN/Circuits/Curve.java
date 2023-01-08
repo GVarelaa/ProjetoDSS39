@@ -7,7 +7,7 @@ public class Curve extends Sector {
 
 	@Override
 	public String toString() {
-		return "Curve GDU = " + this.getGdu();
+		return "Curve";
 	}
 
 }

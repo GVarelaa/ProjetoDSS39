@@ -17,7 +17,6 @@ public class CircuitsFacade implements ISubCircuits {
 
 	public void addCircuit(String name, float length, int numLaps, int numCurves, int numChicanes) throws AlreadyExistingCircuitException {
 		if(this.circuits.containsKey(name)) throw new AlreadyExistingCircuitException("Já existe um circuito com o mesmo nome!");
-
 		this.circuits.put(name, new Circuit(name, length, numLaps, numCurves, numChicanes));
 	}
 
@@ -33,9 +32,7 @@ public class CircuitsFacade implements ISubCircuits {
 	}
 
 	public void addSector(String circuitName, int gdu, int sectorType) {
-		Circuit c = this.circuits.get(circuitName);
-		c.addSector(gdu,sectorType);
-		this.circuits.put(circuitName,c);
+		this.circuits.putSector(circuitName,sectorType,gdu);
 	}
 
 	public List<String> showCircuitSectors(String circuitName) {

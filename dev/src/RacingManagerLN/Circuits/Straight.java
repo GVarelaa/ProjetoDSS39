@@ -8,6 +8,6 @@ public class Straight extends Sector {
 
 	@Override
 	public String toString() {
-		return "Straight GDU = " + this.getGdu();
+		return "Straight";
 	}
 }

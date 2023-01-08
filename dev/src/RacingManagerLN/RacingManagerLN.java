@@ -120,7 +120,7 @@ public class RacingManagerLN implements IRacingManagerLN {
 	}
 
 	public List<String> showCircuitSectors(String circuitName) {
-		return circuits.showCircuitSectors(circuitName);
+		return null;
 	}
 
 	public void addChampionship(String name, List<String> circuits, int maxPlayers) throws AlreadyExistingChampionshipException {

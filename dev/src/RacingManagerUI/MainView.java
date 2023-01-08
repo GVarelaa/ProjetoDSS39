@@ -57,7 +57,7 @@ public class MainView {
 
         if (userMenu == 0) {
             opt = -1;
-            while (opt != 4) {
+            while (opt != 5) {
                 opt = showAdminMenu();
                 switch (opt) {
                     case 1 -> new PilotView(controller, sc).run(); // piloto
